@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>지역 명소 추천 앱 - 지도</title>
+  <style>
+    #map {
+      width: 100vw;
+      height: 100vh;
+    }
+    .region-buttons {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      padding: 10px;
+    }
+    .region-buttons button {
+      display: block;
+      margin: 5px 0;
+    }
+  </style>
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2e57470917bd1667bc3a0d65bdd02d8c"></script>
+</head>
+<body>
+  <div class="region-buttons">
+    <button onclick="moveToRegion('서울')">서울</button>
+    <button onclick="moveToRegion('부산')">부산</button>
+    <button onclick="moveToRegion('광주')">광주</button>
+    <button onclick="moveToRegion('대구')">대구</button>
+    <button onclick="moveToRegion('제주')">제주</button>
+  </div>
+  <div id="map"></div>
+
+  <script>
+    const REGION_COORDS = {
+      "서울": { lat: 37.5665, lng: 126.9780 },
+      "부산": { lat: 35.1796, lng: 129.0756 },
+      "광주": { lat: 35.1595, lng: 126.8526 },
+      "대구": { lat: 35.8714, lng: 128.6014 },
+      "제주": { lat: 33.4996, lng: 126.5312 },
+    };
+
+    let map;
+
+    window.onload = function() {
+      const container = document.getElementById('map');
+      const options = {
+        center: new kakao.maps.LatLng(36.5, 127.8),
+        level: 13
+      };
+
+      map = new kakao.maps.Map(container, options);
+    };
+
+    function moveToRegion(region) {
+      const coord = REGION_COORDS[region];
+      if (coord) {
+        const moveLatLon = new kakao.maps.LatLng(coord.lat, coord.lng);
+        map.setLevel(6);
+        map.setCenter(moveLatLon);
+      }
+    }
+  </script>
+</body>
+</html>
