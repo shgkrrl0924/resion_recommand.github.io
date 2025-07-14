@@ -37,7 +37,7 @@
       background-color: #357ABD;
     }
   </style>
-  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2e57470917bd1667bc3a0d65bdd02d8c"></script>
+  <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=2e57470917bd1667bc3a0d65bdd02d8c"></script>
 </head>
 <body>
   <div class="region-buttons">
@@ -59,6 +59,7 @@
     };
 
     let map;
+    let marker;
 
     window.onload = function() {
       const container = document.getElementById('map');
@@ -68,6 +69,15 @@
       };
 
       map = new kakao.maps.Map(container, options);
+
+      // 광주 마커 생성
+      const gwangjuPosition = new kakao.maps.LatLng(REGION_COORDS["광주"].lat, REGION_COORDS["광주"].lng);
+      marker = new kakao.maps.Marker({
+        position: gwangjuPosition
+      });
+
+      // 마커를 지도에 표시
+      marker.setMap(map);
     };
 
     function moveToRegion(region) {
