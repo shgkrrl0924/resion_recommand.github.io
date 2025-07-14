@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>광주광역시 관광명소</title>
+  <title>지역 관광명소</title>
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -49,41 +48,68 @@
 </head>
 <body>
 
-  <h1>광주광역시 관광명소</h1>
+  <h1 id="region-title">관광명소</h1>
 
-  <div class="spot-list">
-    
-    <div class="spot">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/0/01/May_18th_National_Cemetery_in_Gwangju%2C_Korea.jpg" alt="5·18 국립묘지">
-      <h3>5·18 국립묘지</h3>
-      <p>광주의 역사적 상징. 민주화운동을 기념하고 추모하는 장소입니다.</p>
-    </div>
-
-    <div class="spot">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/d/df/Asia_Culture_Center_Gwangju.jpg" alt="국립아시아문화전당">
-      <h3>국립아시아문화전당</h3>
-      <p>아시아 문화예술의 중심지로 다양한 전시, 공연, 체험이 가능해요.</p>
-    </div>
-
-    <div class="spot">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/4/46/Mudeungsan.jpg" alt="무등산 국립공원">
-      <h3>무등산 국립공원</h3>
-      <p>광주의 상징적 산으로, 풍경이 아름답고 등산로가 잘 정비되어 있습니다.</p>
-    </div>
-
-    <div class="spot">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Gwangju_Folk_Museum_entrance.jpg" alt="광주향토민속박물관">
-      <h3>광주향토민속박물관</h3>
-      <p>광주의 전통과 민속 문화를 체험할 수 있는 공간입니다.</p>
-    </div>
-
-    <div class="spot">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Gwangju_Art_Street.jpg" alt="광주 예술의 거리">
-      <h3>광주 예술의 거리</h3>
-      <p>화랑, 공방, 문화 카페 등이 모여 있는 거리예요. 예술 감성 충전!</p>
-    </div>
-
+  <div class="spot-list" id="spot-list">
+    <!-- JavaScript로 명소 삽입 -->
   </div>
 
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const region = urlParams.get('region');
+
+    // 지역별 명소 정보
+    const SPOTS = {
+      "광주": [
+        {
+          name: "5·18 국립묘지",
+          img: "https://upload.wikimedia.org/wikipedia/commons/0/01/May_18th_National_Cemetery_in_Gwangju%2C_Korea.jpg",
+          desc: "광주의 역사적 상징. 민주화운동을 기념하고 추모하는 장소입니다."
+        },
+        {
+          name: "국립아시아문화전당",
+          img: "https://upload.wikimedia.org/wikipedia/commons/d/df/Asia_Culture_Center_Gwangju.jpg",
+          desc: "아시아 문화예술의 중심지로 다양한 전시, 공연, 체험이 가능해요."
+        },
+        {
+          name: "무등산 국립공원",
+          img: "https://upload.wikimedia.org/wikipedia/commons/4/46/Mudeungsan.jpg",
+          desc: "광주의 상징적 산으로, 풍경이 아름답고 등산로가 잘 정비되어 있습니다."
+        },
+        {
+          name: "광주향토민속박물관",
+          img: "https://upload.wikimedia.org/wikipedia/commons/7/70/Gwangju_Folk_Museum_entrance.jpg",
+          desc: "광주의 전통과 민속 문화를 체험할 수 있는 공간입니다."
+        },
+        {
+          name: "광주 예술의 거리",
+          img: "https://upload.wikimedia.org/wikipedia/commons/2/2b/Gwangju_Art_Street.jpg",
+          desc: "화랑, 공방, 문화 카페 등이 모여 있는 거리예요. 예술 감성 충전!"
+        }
+      ]
+    };
+
+    // 지원되지 않는 지역이면 index.html로 이동
+    if (!SPOTS[region]) {
+      alert("지원되지 않는 지역입니다.");
+      window.location.href = 'index.html';
+    }
+
+    // 제목 변경
+    document.getElementById('region-title').textContent = `${region} 관광명소`;
+
+    // 명소 렌더링
+    const spotList = document.getElementById('spot-list');
+    SPOTS[region].forEach(spot => {
+      const spotDiv = document.createElement('div');
+      spotDiv.className = 'spot';
+      spotDiv.innerHTML = `
+        <img src="${spot.img}" alt="${spot.name}">
+        <h3>${spot.name}</h3>
+        <p>${spot.desc}</p>
+      `;
+      spotList.appendChild(spotDiv);
+    });
+  </script>
 </body>
 </html>
