@@ -110,6 +110,11 @@
     function moveToRegion(region) {
       const coord = REGION_COORDS[region];
       if (coord) {
+          if (region === '광주') {
+          // 광주는 상세 페이지로 이동
+          window.location.href = `region_intro.html?region=${encodeURIComponent(region)}`;
+          return;
+        }
         const moveLatLon = new kakao.maps.LatLng(coord.lat, coord.lng);
         map.setLevel(6);
         map.setCenter(moveLatLon);
