@@ -34,11 +34,7 @@
             color: white;
             cursor: pointer;
         }
-        .region-buttons button:hover {
-            background-color: #0056b3;
-        }
     </style>
-    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=2e57470917bd1667bc3a0d65bdd02d8c"></script>
 </head>
 <body>
     <div class="region-buttons">
@@ -50,31 +46,43 @@
     </div>
     <div id="map"></div>
 
+    <!-- Kakao Maps API -->
+    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=2e57470917bd1667bc3a0d65bdd02d8c"></script>
+    
     <script>
-        var mapContainer = document.getElementById('map');
-        var mapOption = {
-            center: new kakao.maps.LatLng(36.5, 127.8),
-            level: 13
-        };
+        // 페이지 로드 완료 후 실행
+        document.addEventListener('DOMContentLoaded', function() {
+            // 지도를 표시할 div
+            var mapContainer = document.getElementById('map');
+            
+            // 지도의 초기 옵션
+            var mapOption = {
+                center: new kakao.maps.LatLng(36.5, 127.8), // 대한민국 중심
+                level: 13 // 지도의 확대 레벨
+            };
 
-        var map = new kakao.maps.Map(mapContainer, mapOption);
+            // 지도를 생성합니다    
+            var map = new kakao.maps.Map(mapContainer, mapOption);
 
-        const REGION_COORDS = {
-            "서울": { lat: 37.5665, lng: 126.9780 },
-            "부산": { lat: 35.1796, lng: 129.0756 },
-            "광주": { lat: 35.1595, lng: 126.8526 },
-            "대구": { lat: 35.8714, lng: 128.6014 },
-            "제주": { lat: 33.4996, lng: 126.5312 }
-        };
+            // 지역별 좌표
+            window.REGION_COORDS = {
+                "서울": { lat: 37.5665, lng: 126.9780 },
+                "부산": { lat: 35.1796, lng: 129.0756 },
+                "광주": { lat: 35.1595, lng: 126.8526 },
+                "대구": { lat: 35.8714, lng: 128.6014 },
+                "제주": { lat: 33.4996, lng: 126.5312 }
+            };
 
-        function moveToRegion(region) {
-            const coord = REGION_COORDS[region];
-            if (coord) {
-                const moveLatLon = new kakao.maps.LatLng(coord.lat, coord.lng);
-                map.setLevel(6);
-                map.setCenter(moveLatLon);
-            }
-        }
+            // 지역 이동 함수를 전역 스코프에 정의
+            window.moveToRegion = function(region) {
+                const coord = REGION_COORDS[region];
+                if (coord) {
+                    const moveLatLon = new kakao.maps.LatLng(coord.lat, coord.lng);
+                    map.setLevel(6);
+                    map.setCenter(moveLatLon);
+                }
+            };
+        });
     </script>
 </body>
 </html>
